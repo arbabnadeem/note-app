@@ -5,12 +5,25 @@ const mongoose = require("mongoose");
 const userModel = require("./models/userModel");
 const noteModel = require("./models/noteModel");
 
+// const connectDB = async () => {
+//   try {
+//     mongoose.connection.on("connected", () => console.log("db connected"));
+//     await mongoose.connect(process.env.MONGO_URI);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+
+// connectDB();
+
 const connectDB = async () => {
   try {
-    mongoose.connection.on("connected", () => console.log("db connected"));
-    await mongoose.connect(process.env.MONGO_URI);
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("DB Connected:", conn.connection.host);
   } catch (error) {
-    console.log(error.message);
+    console.error("DB ERROR:", error.message);
+    process.exit(1);
   }
 };
 
